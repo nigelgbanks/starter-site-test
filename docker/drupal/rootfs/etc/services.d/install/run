@@ -1,0 +1,32 @@
+#!/usr/bin/with-contenv bash
+# shellcheck shell=bash
+set -e
+
+# shellcheck disable=SC1091
+source /etc/islandora/utilities.sh
+
+# Run as a one-shot service.
+s6-svc -O /var/run/s6/services/install
+
+# Allow nginx to query this services status (for install page).
+s6-svperms -g nginx /var/run/s6/services/install
+
+# Wait for services.
+wait_for_service default broker &
+wait_for_service default db &
+wait_for_service default solr &
+wait
+
+# Perform install/import.
+cd /var/www/drupal
+/usr/local/share/custom/install.sh
+
+touch /installed
+
+cat <<-EOT
+
+
+#####################
+# Install Completed #
+#####################
+EOT

@@ -1,0 +1,17 @@
+diff --git a/composer.json b/composer.json
+index 924bb69..7dc2854 100644
+--- a/composer.json
++++ b/composer.json
+@@ -58,10 +58,8 @@
+                 "web-root": "web/"
+             },
+             "file-mapping": {
+-                "[web-root]/sites/default/settings.php": {
+-                    "mode": "append",
+-                    "default": "web/core/assets/scaffold/files/default.settings.php",
+-                    "append": "assets/patches/default_settings.txt"
++                "[web-root]/sites/default/default.settings.php": {
++                    "append": "assets/default.settings.php"
+                 }
+             }
+         },
